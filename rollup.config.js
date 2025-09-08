@@ -17,28 +17,31 @@ const plugins = [
 	}),
 ];
 
+const isSafari = process.env.BUILD === 'safari';
+const buildDir = isSafari ? 'build-safari' : 'build';
+
 const intercept = {
 	input: 'src/intercept.ts',
 	output: {
-		file: 'build/intercept.js',
+		file: `${buildDir}/intercept.js`,
 		format: 'iife',
 	},
-	plugins: [...plugins, css({ exclude: '**/*.str.css', output: 'build/eradicate.css' })],
+	plugins: [...plugins, css({ exclude: '**/*.str.css', output: `${buildDir}/eradicate.css` })],
 };
 
 const options = {
 	input: 'src/options/options.ts',
 	output: {
-		file: 'build/options.js',
+		file: `${buildDir}/options.js`,
 		format: 'iife',
 	},
-	plugins: [...plugins, css({ exclude: '**/*.str.css', output: 'build/options.css' })],
+	plugins: [...plugins, css({ exclude: '**/*.str.css', output: `${buildDir}/options.css` })],
 };
 
 const background = {
 	input: 'src/background/service-worker.ts',
 	output: {
-		file: 'build/service-worker.js',
+		file: `${buildDir}/service-worker.js`,
 		format: 'iife',
 	},
 	plugins,
