@@ -25,11 +25,13 @@ export function eradicate(store: Store) {
 			document.querySelector('div[aria-label=Gaming][role=main]') || // For gaming feed
 			document.querySelector('div.x1hc1fzr.x1unhpq9.x6o7n8i'); // For new fb layout (Q4 2022)
 
-		if (feed == null) {
+		const mobileContainer = document.getElementById('screen-root'); // mobile layout
+
+		if (feed == null && mobileContainer == null) {
 			return;
 		}
 
-		const container = feed.parentNode;
+		const container = mobileContainer || feed?.parentNode;
 
 		// Add News Feed Eradicator quote/info panel
 		if (container && !isAlreadyInjected()) {

@@ -16,6 +16,13 @@ build-safari: install copy-assets-safari
 	mkdir -p dist
 	(cd build-safari && zip -r ../dist/NewsFeedEradicator_Safari_$(GITTAG).zip .)
 
+create-ios-app: build-safari
+	mkdir -p apple-app
+	cd apple-app && xcrun safari-web-extension-converter ../build-safari --project-location . --app-name "News Feed Eradicator" --bundle-identifier com.htalat.News-Feed-Eradicator --swift --force
+
+build-ios: create-ios-app
+	cd apple-app && chmod +x build-ios.sh && ./build-ios.sh
+
 # Typecheck only
 check:
 	npm run check
