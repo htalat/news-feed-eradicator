@@ -202,7 +202,8 @@ html:not([data-nfe-enabled='false']) div[aria-label='Stories'],
 html:not([data-nfe-enabled='false'])
 div.x1hc1fzr.x1unhpq9.x6o7n8i > :not(#nfe-container), /* For new fb layout (Q4 2022) */
 html:not([data-nfe-enabled='false'])
-div[role='region'][data-visualcompletion='ignore-dynamic'] /* For stories in non-english versions */ {
+div[role='region'][data-visualcompletion='ignore-dynamic'], /* For stories in non-english versions */
+html:not([data-nfe-enabled='false']) #screen-root > :not(#nfe-container) /* For mobile Safari */ {
 	position: absolute !important;
 	opacity: 0 !important;
 	pointer-events: none !important;

@@ -10,6 +10,19 @@ build: install copy-assets
 	mkdir -p dist
 	(cd build && zip -r ../dist/NewsFeedEradicator_$(GITTAG).zip .)
 
+build-safari: install copy-assets-safari
+	mkdir -p build-safari
+	NODE_ENV=production ./node_modules/.bin/rollup -c --environment BUILD:safari
+	mkdir -p dist
+	(cd build-safari && zip -r ../dist/NewsFeedEradicator_Safari_$(GITTAG).zip .)
+
+create-ios-app: build-safari
+	mkdir -p apple-app
+	cd apple-app && xcrun safari-web-extension-converter ../build-safari --project-location . --app-name "News Feed Eradicator" --bundle-identifier com.htalat.News-Feed-Eradicator --swift --force
+
+build-ios: create-ios-app
+	cd apple-app && chmod +x build-ios.sh && ./build-ios.sh
+
 # Typecheck only
 check:
 	npm run check
@@ -30,6 +43,19 @@ copy-assets:
 	cp assets/icon48.png build/icon48.png
 	cp assets/icon64.png build/icon64.png
 	cp assets/icon128.png build/icon128.png
+
+copy-assets-safari:
+	mkdir -p build-safari
+	mkdir -p build-safari/icons
+	cp src/icons/* build-safari/icons/
+	cp src/manifest-safari.json build-safari/manifest.json
+	cp src/options/options.html build-safari/options.html
+	cp src/background/background.html build-safari/background.html
+	cp assets/icon16.png build-safari/icon16.png
+	cp assets/icon32.png build-safari/icon32.png
+	cp assets/icon48.png build-safari/icon48.png
+	cp assets/icon64.png build-safari/icon64.png
+	cp assets/icon128.png build-safari/icon128.png
 
 dev: install copy-assets
 	mkdir -p build
